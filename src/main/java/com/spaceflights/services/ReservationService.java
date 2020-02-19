@@ -71,12 +71,12 @@ public class ReservationService {
             return e.toString();
         }
     }
-    public static String addReservation(String flightID,String participantID){
+    public static String addReservation(Reservation reservation){
         // Create a variable for the ConnectionURL string.
         ConnectionUrl conUrl = new ConnectionUrl();
         String connectionUrl = conUrl.getConnectionUrl();
         try (Connection con = DriverManager.getConnection(connectionUrl); Statement stmt = con.createStatement();) {
-            String SQL = "exec AddReservation @FlightID =" + flightID + ",@ParticipantID="+participantID;
+            String SQL = "exec AddReservation @FlightID =" + reservation.getFlightID() + ",@ParticipantID="+reservation.getParticipantID();
             stmt.execute(SQL);
             return "Success Adding!";
         }

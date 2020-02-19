@@ -7,6 +7,7 @@ import com.spaceflights.services.FlightService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin
@@ -16,7 +17,7 @@ public class FlightController {
 
     @GetMapping("/flight")
     @ResponseBody
-    public List<Flight> flight(@RequestParam(name="name", required=false, defaultValue="Stranger") String name)
+    public List<Flight> flight()
     {
         return FlightService.getAllFlights();
     }
@@ -34,19 +35,24 @@ public class FlightController {
     @DeleteMapping("/flight/delete/{id}")
     @ResponseBody
     public String deleteFlight(@PathVariable("id") String flightID){
+//        try {
+//            String message = FlightService.deleteFlight(flightID);
+//            return new ResponseEntity<String>(message,HttpStatus.OK);
+//        }
+//        catch (Exception e){
+//            return new ResponseEntity<String>(e.toString(),HttpStatus.BAD_REQUEST);
+//
+//        }
         return FlightService.deleteFlight(flightID);
     }
 
+    @ResponseBody
     @RequestMapping(path= "/flight/add",method = {RequestMethod.GET, RequestMethod.PUT, RequestMethod.POST})
-    public String addFlight(
-            @RequestParam String startDate,
-            @RequestParam String endDate,
-            @RequestParam String participantCapacity,
-            @RequestParam String price
+    public ResponseEntity<String> addFlight(
+            @RequestBody Flight flight
     )
     {
-        Flight flight = new Flight(0,startDate,endDate,Integer.parseInt(participantCapacity),Float.parseFloat(price));
-        return FlightService.addFlight(flight);
-
+        String message =  FlightService.addFlight(flight);
+        return new ResponseEntity<String>(message,HttpStatus.OK);
     }
 }

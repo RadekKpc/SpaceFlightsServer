@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin
 @Controller
 public class ParticipantController {
 
@@ -16,7 +17,7 @@ public class ParticipantController {
 
     @GetMapping("/participant")
     @ResponseBody
-    public List<Participant> participant(@RequestParam(name="name", required=false, defaultValue="Stranger") String name)
+    public List<Participant> participant()
     {
         return ParticipantService.getAllParticipants();
     }
@@ -37,18 +38,14 @@ public class ParticipantController {
         return ParticipantService.deleteParticipant(participantID);
     }
 
+    @ResponseBody
     @RequestMapping(path= "/participant/add",method = {RequestMethod.GET, RequestMethod.PUT, RequestMethod.POST})
-    public String addParticipant(
-            @RequestParam String name,
-            @RequestParam String surname,
-            @RequestParam String gender,
-            @RequestParam String country,
-            @RequestParam String birthDate,
-            @RequestParam String notes
+    public ResponseEntity<String> addParticipant(
+            @RequestBody Participant participant
     )
     {
-        Participant participant = new Participant(0,name,surname,gender,country,birthDate,notes);
-        return ParticipantService.addParticipant(participant);
+        String message = ParticipantService.addParticipant(participant);
+        return new ResponseEntity<String>(message,HttpStatus.OK);
 
     }
 }

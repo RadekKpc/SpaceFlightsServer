@@ -10,6 +10,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
+@CrossOrigin
 @Controller
 public class ReservationController {
     @GetMapping("/reservation")
@@ -34,13 +36,13 @@ public class ReservationController {
         return ReservationService.deleteReservation(reservationID);
     }
 
+    @ResponseBody
     @RequestMapping(path= "/reservation/add",method = {RequestMethod.GET, RequestMethod.PUT, RequestMethod.POST})
     public String addReservation(
-            @RequestParam String flightID,
-            @RequestParam String participantID
-    )
+            @RequestBody Reservation reservation
+            )
     {
-        return ReservationService.addReservation(flightID,participantID);
+        return ReservationService.addReservation(reservation);
 
     }
     @PutMapping("/reservation/paid/{id}")
