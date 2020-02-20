@@ -2,6 +2,7 @@ package com.spaceflights.services;
 
 import com.spaceflights.connection.ConnectionUrl;
 import com.spaceflights.dataStructure.Flight;
+import com.spaceflights.dataStructure.FreePlaces;
 
 import java.sql.*;
 import java.text.DateFormat;
@@ -98,6 +99,30 @@ public class FlightService {
             // Iterate through the data in the result set and display it.
             while (rs.next()) {
                 result.add(new Flight(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getInt(4),rs.getFloat(5)));
+
+            }
+
+        }
+        // Handle any errors that may have occurred.
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public static List<FreePlaces> getFreePlaces(){
+        // Create a variable for the ConnectionURL string.
+        ConnectionUrl conUrl = new ConnectionUrl();
+        String connectionUrl = conUrl.getConnectionUrl();
+        List<FreePlaces> result = new LinkedList<FreePlaces>();
+        try (Connection con = DriverManager.getConnection(connectionUrl); Statement stmt = con.createStatement();) {
+            String SQL = "select f.flightID,(f.ParticipantCapacity - count(*)) from Flights f join FlightsReservation r on r.FlightID = f.FlightID " +
+                    "join Participants p on p.ParticipantID = r.ParticipantID " +
+                    "group by f.FlightID,f.ParticipantCapacity";
+            ResultSet rs = stmt.executeQuery(SQL);
+            // Iterate through the data in the result set and display it.
+            while (rs.next()) {
+                result.add(new FreePlaces(rs.getInt(1),rs.getInt(2)));
 
             }
 

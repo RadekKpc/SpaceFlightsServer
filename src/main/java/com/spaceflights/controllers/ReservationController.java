@@ -45,9 +45,9 @@ public class ReservationController {
         return ReservationService.addReservation(reservation);
 
     }
-    @PutMapping("/reservation/paid/{id}")
+    @PutMapping("/reservation/pay/{id}")
     @ResponseBody
-    public String paidReservation(@PathVariable("id") String reservationID){
-        return ReservationService.paidReservation(reservationID);
+    public String payReservation(@PathVariable("id") String reservationID){
+        return ReservationService.payReservation(reservationID);
     }
 }

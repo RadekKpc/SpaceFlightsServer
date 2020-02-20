@@ -86,7 +86,7 @@ public class ReservationService {
             return e.toString();
         }
     }
-    public static String paidReservation(String id){
+    public static String payReservation(String id){
         // Create a variable for the ConnectionURL string.
         ConnectionUrl conUrl = new ConnectionUrl();
         String connectionUrl = conUrl.getConnectionUrl();

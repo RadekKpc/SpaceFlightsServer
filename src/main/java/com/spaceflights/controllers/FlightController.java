@@ -3,6 +3,7 @@ package com.spaceflights.controllers;
 import java.util.List;
 
 import com.spaceflights.dataStructure.Flight;
+import com.spaceflights.dataStructure.FreePlaces;
 import com.spaceflights.services.FlightService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -59,4 +60,12 @@ public class FlightController {
     public List<Flight> getFlightIdByParticipant(@PathVariable("id") String ParticipantID, @PathVariable("isPaid") String isPaid){
         return FlightService.getFlightIdByParticipant(ParticipantID,isPaid);
     }
+    //free places
+    @GetMapping("/flight/free")
+    @ResponseBody
+    public List<FreePlaces> freePlaces()
+    {
+        return FlightService.getFreePlaces();
+    }
+
 }
