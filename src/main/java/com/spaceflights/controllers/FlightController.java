@@ -7,7 +7,6 @@ import com.spaceflights.services.FlightService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin
@@ -54,5 +53,10 @@ public class FlightController {
     {
         String message =  FlightService.addFlight(flight);
         return new ResponseEntity<String>(message,HttpStatus.OK);
+    }
+    @GetMapping("/flight-participant/{isPaid}/{id}")
+    @ResponseBody
+    public List<Flight> getFlightIdByParticipant(@PathVariable("id") String ParticipantID, @PathVariable("isPaid") String isPaid){
+        return FlightService.getFlightIdByParticipant(ParticipantID,isPaid);
     }
 }

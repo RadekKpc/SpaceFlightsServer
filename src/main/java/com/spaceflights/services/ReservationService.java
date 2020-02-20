@@ -76,7 +76,7 @@ public class ReservationService {
         ConnectionUrl conUrl = new ConnectionUrl();
         String connectionUrl = conUrl.getConnectionUrl();
         try (Connection con = DriverManager.getConnection(connectionUrl); Statement stmt = con.createStatement();) {
-            String SQL = "exec AddReservation @FlightID =" + reservation.getFlightID() + ",@ParticipantID="+reservation.getParticipantID();
+            String SQL = "exec AddReservation @FlightID =" + reservation.getFlightID() + ",@ParticipantID="+reservation.getParticipantID()+",@isPaid="+reservation.getIsPaid();
             stmt.execute(SQL);
             return "Success Adding!";
         }

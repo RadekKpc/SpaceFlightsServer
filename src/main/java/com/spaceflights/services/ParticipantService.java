@@ -83,4 +83,26 @@ public class ParticipantService {
             return e.toString();
         }
     }
+    public static List<Participant> getParticipantByFlightId(String flightID,String isPaid){
+        // Create a variable for the ConnectionURL string.
+        ConnectionUrl conUrl = new ConnectionUrl();
+        String connectionUrl = conUrl.getConnectionUrl();
+        List<Participant> result = new LinkedList<Participant>();
+
+        try (Connection con = DriverManager.getConnection(connectionUrl); Statement stmt = con.createStatement();) {
+            String SQL = "select * from Participants p join FlightsReservation f on f.ParticipantID = p.ParticipantID WHERE f.FlightID = " + flightID +" AND f.isPaid="  + isPaid;
+            ResultSet rs = stmt.executeQuery(SQL);
+            // Iterate through the data in the result set and display it.
+            while (rs.next()) {
+                result.add(new Participant(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7)));
+
+            }
+
+        }
+        // Handle any errors that may have occurred.
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
 }

@@ -48,4 +48,9 @@ public class ParticipantController {
         return new ResponseEntity<String>(message,HttpStatus.OK);
 
     }
+    @GetMapping("/participant-flight/{isPaid}/{id}")
+    @ResponseBody
+    public List<Participant> getParticipantByFlightId(@PathVariable("id") String FlightID,@PathVariable("isPaid") String isPaid){
+        return ParticipantService.getParticipantByFlightId(FlightID,isPaid);
+    }
 }
