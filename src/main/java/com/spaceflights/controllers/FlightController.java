@@ -32,17 +32,17 @@ public class FlightController {
         return new ResponseEntity<Flight>(flight,HttpStatus.OK);
     }
 
+    //Flights with free places
+    @GetMapping("/flight/places")
+    @ResponseBody
+    public List<Flight> getAllFreeFlights()
+    {
+        return FlightService.getAllFreeFlights();
+    }
+
     @DeleteMapping("/flight/delete/{id}")
     @ResponseBody
     public String deleteFlight(@PathVariable("id") String flightID){
-//        try {
-//            String message = FlightService.deleteFlight(flightID);
-//            return new ResponseEntity<String>(message,HttpStatus.OK);
-//        }
-//        catch (Exception e){
-//            return new ResponseEntity<String>(e.toString(),HttpStatus.BAD_REQUEST);
-//
-//        }
         return FlightService.deleteFlight(flightID);
     }
 
@@ -60,7 +60,7 @@ public class FlightController {
     public List<Flight> getFlightIdByParticipant(@PathVariable("id") String ParticipantID, @PathVariable("isPaid") String isPaid){
         return FlightService.getFlightIdByParticipant(ParticipantID,isPaid);
     }
-    //free places
+    //free places pairs id - freePlaces
     @GetMapping("/flight/free")
     @ResponseBody
     public List<FreePlaces> freePlaces()
