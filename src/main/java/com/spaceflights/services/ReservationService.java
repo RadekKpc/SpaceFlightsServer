@@ -61,7 +61,7 @@ public class ReservationService {
         ConnectionUrl conUrl = new ConnectionUrl();
         String connectionUrl = conUrl.getConnectionUrl();
         try (Connection con = DriverManager.getConnection(connectionUrl); Statement stmt = con.createStatement();) {
-            String SQL = "exec RemoveReservation @@FlightsReservationID=" + id;
+            String SQL = "exec RemoveReservation @FlightsReservationID=" + id;
             stmt.execute(SQL);
             return "Success deleting!";
         }
